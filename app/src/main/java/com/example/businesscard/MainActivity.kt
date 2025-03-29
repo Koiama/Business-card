@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +42,8 @@ class MainActivity : ComponentActivity() {
                 number = "+7-920-761-70-05",
                 handle = "@ksenia0koiama",
                 email = "groznaaksenia@gmail.com",
-                Color(0xFFa6d864)
+                Color(0xFFa6d864),
+                Modifier.background(color = Color(0xFF9664d8))
             )
         }
     }
@@ -79,6 +81,27 @@ fun LogoNameTitle(
 }
 
 @Composable
+fun ContactInfoRow(
+    icon: @Composable () -> Unit,
+    text: String,
+    textColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        icon()
+        Text(
+            text = text,
+            color = textColor,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(start = 6.dp)
+        )
+    }
+}
+
+@Composable
 fun ContactInformation(
     number: String,
     handle: String,
@@ -91,54 +114,42 @@ fun ContactInformation(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Row {
-            Icon(
-                MyAppIcons.Call,
-                contentDescription = null,
-                tint = textColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = number,
-                color = textColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .align(Alignment.CenterVertically)
-            )
-        }
-        Row {
-            Icon(
-                Icons.AutoMirrored.Filled.Send,
-                contentDescription = null,
-                tint = textColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = handle,
-                color = textColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .align(Alignment.CenterVertically)
-            )
-        }
-        Row {
-            Icon(
-                MyAppIcons.Email,
-                contentDescription = null,
-                tint = textColor,
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = email,
-                color = textColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier
-                    .padding(start = 10.dp)
-                    .align(Alignment.CenterVertically)
-            )
-        }
+        ContactInfoRow(
+            icon = {
+                Icon(
+                    Icons.Filled.Call,
+                    contentDescription = "Телефон",
+                    tint = textColor,
+                    modifier = Modifier.size(20.dp)
+                )
+            },
+            text = number,
+            textColor = textColor
+        )
+        ContactInfoRow(
+            icon = {
+                Icon(
+                    Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "Отправить",
+                    tint = textColor,
+                    modifier = Modifier.size(20.dp)
+                )
+            },
+            text = handle,
+            textColor = textColor
+        )
+        ContactInfoRow(
+            icon = {
+                Icon(
+                    Icons.Filled.Email,
+                    contentDescription = "Email",
+                    tint = textColor,
+                    modifier = Modifier.size(20.dp)
+                )
+            },
+            text = email,
+            textColor = textColor
+        )
     }
 }
 
@@ -171,9 +182,8 @@ fun BusinessCard(
     }
 }
 
-val MyAppIcons = Icons.Filled
 
-@Preview(showBackground = true, backgroundColor = 0xFF9664d8)
+@Preview(showBackground = true)
 @Composable
 fun BusinessCardPreview() {
     BusinessCard(
@@ -183,6 +193,7 @@ fun BusinessCardPreview() {
         number = "+7-920-761-70-05",
         handle = "@ksenia0koiama",
         email = "groznaaksenia@gmail.com",
-        Color(0xFFa6d864)
+        Color(0xFFa6d864),
+        Modifier.background(color = Color(0xFF9664d8))
     )
 }
